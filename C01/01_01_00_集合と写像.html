@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>First Chapter - BOOK</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">BOOK</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="1-1-集合と写像"><a class="header" href="#1-1-集合と写像">1-1 集合と写像</a></h2>
+<p>[[<em>TOC</em>]]</p>
+<h3 id="集合"><a class="header" href="#集合">集合</a></h3>
+<p>数学ではものの集まりをひとまとめにして，集合 (set) $A$ といい，$A$ に属するもの $a$ を元または要素 (element) という。$a$ が $A$ の元であることを，$a\in A$ と書く。元を全く含まない集合を空集合 (empty set) といい，$\phi$ で表す。元 $a_1\cdots a_n$ からなる集合を，${a_1,\cdots,a_n}$ または単に，${a_i}$ と書く。</p>
+<p>集合 $A$ の全ての元が集合 $X$ に属するとき，$A$ は $X$ の部分集合 (subset) であるといい，$A \subset X$ と書く。また，条件 $\cdots$ をみたす元 $x$ の全体の集合を ${x|\cdots}$ で表す。</p>
+<h3 id="写像"><a class="header" href="#写像">写像</a></h3>
+<p>$X$ と $Y$ を集合とする。$X$ から $Y$ への写像 (mapping) とは，各 $x\in X$ に対して，$y\in Y$ を対応させる規則であり，これを，
+$$
+f: x \longmapsto y \tag{1}
+$$
+で表す。$f$ が $X$ の特定の元 $x$ を $Y$ の元 $y$ に写像することを表現するには，
+$$
+f: x\longmapsto y \tag{2}
+$$
+を使う。図1のような写像の一般的な概念図を描く習慣を身につけるとよい。</p>
+<img src="image-20250309160916481.png" alt="image-20250309160916481" style="zoom:7%;" />
+<p>図1　写像 $f: X\to Y$, $x\mapsto y$</p>
+<p>[例] 最も簡単な写像の例は実数関数である。実数全体の集合を $\boldsymbol{R}$ で表す。関数 $f$ は $\boldsymbol{R}$ 上の点 $x$ に，やはり $\boldsymbol{R}$ 上の点 $f(x)$ を対応させる規則である。</p>
+<p>写像 $f: X\to Y$ が与えられた時，$X$ の部分集合 $A$ に対して $Y$ の部分集合
+$$
+f(A)={f(x)\in Y,|,x\in A } \tag{3}
+$$
+を，$A$ の $f$ による像 (image) という (図2a)。また，$Y$ の部分集合 $B$ に対して $X$ の部分集合
+$$
+f^{-1}(B)={x\in X,|,f(x)\in B} \tag{4}
+$$
+を，$B$ の $f$ による逆像 (inverse image) という (図2b)。</p>
+<img src="image-20250309164840277.png" alt="image-20250309164840277" style="zoom:10%;" />
+<p>図2 写像 $f: X\to Y$。(a) $A$ の $f$ による像 $f(A)$，(b) $B$ の $f$ による逆像 $f^{-1}(B)$。</p>
+<p>とくに，$X$ から $X$ への写像を考えたとき，集合 $X$ の各元に $x$ 自身を対応させる写像を，$X$ の恒等写像 (identity mapping) といい，$1_X$，$1$，$\text{id}_{X}$ 等で表す。</p>
+<p>円板の内側のように，"縁" のない集合を開集合 (open set) という。写像 $f: X\to Y$ に対し，$Y$ の開集合 $V$ の逆像 $f^{-1}(V)$ が開集合であれば，$f$ を連続写像 (continuous mapping) という。逆に，写像 $f: X\to Y$ が連続であれば，$Y$ の開集合 $V$ の逆像 $f^{-1}(V)$ も $x$ の開集合となる。この連続の定義はとっつきにくいと思われるかもしれないが，微分積分では実数関数に対して，上と等価な次のような定義を習ったことを思い出そう。</p>
+<p>関数 $f (x)$ が点 $x_0$ で連続であるとは，すべての $\varepsilon &gt; 0$ に対して，ある $\delta &gt;0 $ が存在して，$|x-x_0| &lt; \delta$ を満たすすべての $x$ について，$|f(x)-f(x_0)|&lt;\varepsilon$ となることをいう。</p>
+<h3 id="合成写像"><a class="header" href="#合成写像">合成写像</a></h3>
+<p>2つの写像 $f: X\to Y$，$g: Y\to Z$ に対して，写像 $h: X\to Z$ を，$h(x)=g(f(x))$ と定義する。この写像 $h$ を，$g\circ f$ または単に $gf$ で表し，<strong>合成写像</strong> (composite mapping) という (図3) 。$f$，$g$ が連続写像ならば，合成 $g\circ f$ も連続である。図4のように，図式 (diagram) を用いて表すことも多い。</p>
+<img src="image-20250309170631882.png" alt="image-20250309170631882" style="zoom:10%;" />
+<p>図3 2つの写像 $f: X\to Y$，$g: Y\to Z$ の合成</p>
+<img src="image-20250309171123728.png" alt="image-20250309171123728" style="zoom:15%;" />
+<p>図4 合成写像 $g\circ f$ を表す図式</p>
+<h3 id="直積集合"><a class="header" href="#直積集合">直積集合</a></h3>
+<p>2つの集合 $X$，$Y$ から新しい集合 $X \times Y$ を次のようにして作ることができる。$X$ の元 $x$ と $Y$ の元 $y$ との対 $(x,y)$ を考える。2つの対 $(x,y)$ と $(x',y')$ が等しいとは，$x=x'$，$y=y'$ のときに限ると約束する。対 $(x,y)$ の全体の集合 (図5)，
+$$
+X\times Y={(x,y),|,x \in X,, y \in Y} \tag{5}
+$$
+を $X$ と $Y$ の直積集合 (product set) という。(5) を言葉で言い直してみると，次のようになる。</p>
+<p>$x$ は $X$ の元，$y$ は $Y$ の元であり，そのような $x$，$y$ の対 $(x,y)$ の集合を，$X\times Y$ で表す。</p>
+<p>$n$ 個の集合 $X_1, X_2,\cdots,X_n$ に対しても同様にして，直積集合
+$$
+X_1\times\cdots\times X_n={(x_1,\cdots,x_n,|,x_i\in X_i,;i=1,\cdots,n} \tag{6}
+$$
+が定義される。</p>
+<img src="image-20250309172849011.png" alt="image-20250309172849011" style="zoom:15%;" />
+<p>図5　直積集合 $X\times Y$ の概念図</p>
+<p>[例1] $\boldsymbol{R}$ を実数全体の集合とする。$\boldsymbol{R}\times\boldsymbol{R}$ は，点 $(x,y)$，$x\in\boldsymbol{R}$，$y\in\boldsymbol{R}$，全体の集合であるから，2次元平面のことである。1－5節「ユークリッド空間」では，これを一般化する。</p>
+<p>[例2] $S^1$ を半径 $1$ の円，$\boldsymbol{R}$ を実数全体の集合とする。$S^1\times \boldsymbol{R}$ は円柱の表面を表し，$S^1\times S^1$ はトーラスを表す (図6)。</p>
+<h3 id="類別と同値"><a class="header" href="#類別と同値">類別と同値</a></h3>
+<p>集合 $X$ を互いに共通な元をもたない部分集合 $A$，$B$，$C$，$\cdots$ に分けることを，$X$ を類別するという。
+$$
+X=A\cup B\cup C \cdots \tag{7}
+$$
+記号 $\cup$ は和集合を表す。このとき，各部分集合 $A, B, C,\cdots$ を類 (class) という。$X$ の元 $x$ はそれか一つの類に含まれ，また，$x$ を含む類はただ一つである。</p>
+<p>[例] $Z$ を整数全体の集合とする。$Z$ は偶数全体からなる部分集合 $A$ と奇数全体からなる部分集合 $B$ に類別される。$Z=A\cup B$。</p>
+<p>集合 $X$ に 記号 $\sim$ で表される関係が定義されているとする。$X$ の任意の元 $x$，$y$，$z$ に対し，
+$$
+\begin{eqnarray}
+&amp;(1)&amp; 反射法則，x\sim x\
+&amp;(2)&amp; 対象法則，x\sim y ;ならば; y\sim x \
+&amp;(3)&amp; 推移法則，x\sim y,; y\sim z  ;ならば; x \sim z \
+\end{eqnarray}\tag{8}
+$$
+が成り立つならば，関係 $\sim$ は同値関係 (equivalent relation) であるという。</p>
+<p>また，$x\sim y$ であるとき，$x$ と $y$ は同値であるという。関係の定義にまで遡ると詳しくなりすぎるので，例を挙げる。</p>
+<p>[例] $Z$ を整数全体の集合とする。2つの整数 $m$，$n$ の差 $n-m$ は，偶数か奇数である。いま，$n-m$ が2の倍数であるとき，$n\sim m$，と関係 $\sim$ を定義する。この関係 $\sim$ は，上の3つの法則を満たすので同値関係であることが分かる。偶数同士および奇数同士はおのおの同値である。しかし，偶数と奇数は同値ではない。したがって，この関係によっても，前と同じ $Z$ の類別が得られる。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter_0.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter_0.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
